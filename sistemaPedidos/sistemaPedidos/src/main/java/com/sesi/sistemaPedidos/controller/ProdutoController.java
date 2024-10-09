@@ -33,6 +33,6 @@ public class ProdutoController {
     @PostMapping("/produtos/salvar") // Alterado para evitar conflito
     public String salvarProduto(@ModelAttribute Produto produto) {
         produtoRepository.save(produto); // Salva o produto no banco de dados
-        return "redirect:/produtos"; // Redireciona para a lista de produtos após salvar
+        return "redirect:/produtos/index"; // Redireciona para a lista de produtos após salvar
     }
 }

@@ -1,23 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Novo Pedido</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        footer {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .alert {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Cadastrar Novo Pedido</h1>
+        <h1 class="text-center mb-4">Cadastrar Novo Pedido</h1>
         
-        <form action="/pedidos/salvar" method="post">
+        <div class="alert alert-success" id="successAlert" role="alert">
+            Pedido salvo com sucesso!
+        </div>
+        <div class="alert alert-danger" id="errorAlert" role="alert">
+            Ocorreu um erro ao salvar o pedido. Tente novamente.
+        </div>
+
+        <form th:action="@{/pedidos/salvar}" th:object="${pedidos}" method="post" onsubmit="return validateForm();">
             <div class="form-group">
                 <label for="produto">Produto</label>
-                <input type="text" class="form-control" id="produto" name="produto" required>
+                <input type="text" class="form-control" id="produto" name="produto" placeholder="Nome do produto" required>
             </div>
             <div class="form-group">
                 <label for="quantidade">Quantidade</label>
-                <input type="number" class="form-control" id="quantidade" name="quantidade" required min="1">
+                <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="Quantidade" required min="1">
             </div>
             <div class="form-group">
                 <label for="data">Data</label>
@@ -32,7 +71,7 @@
                     <option value="CANCELADO">Cancelado</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Salvar Pedido</button>
+            <button type="submit" class="btn btn-custom">Salvar Pedido</button>
         </form>
 
         <a href="/" class="btn btn-secondary mt-4">Voltar à Lista de Produtos</a>
@@ -45,5 +84,23 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function validateForm() {
+            // Exemplo de validação simples, você pode customizar
+            const produto = document.getElementById('produto').value;
+            const quantidade = document.getElementById('quantidade').value;
+            const data = document.getElementById('data').value;
+
+            if (!produto || !quantidade || !data) {
+                $('#errorAlert').show();
+                return false;
+            }
+
+            // Aqui você pode adicionar mais lógica se necessário.
+            $('#successAlert').show(); // Mostrar mensagem de sucesso (caso haja)
+            return true;
+        }
+    </script>
 </body>
+
 </html>
